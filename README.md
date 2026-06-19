@@ -11,6 +11,27 @@ conversation fuzzy.
 Works with any [`skills.sh`](https://skills.sh/)-compatible agent: Claude Code,
 Codex, Cursor, Gemini CLI, opencode, and others.
 
+## Install
+
+```bash
+npx skills add fabriqaai/conceptual-model-pass
+```
+
+Install directly from GitHub:
+
+```bash
+npx skills add https://github.com/fabriqaai/conceptual-model-pass --skill conceptual-model-pass
+```
+
+Install globally and skip prompts:
+
+```bash
+npx skills add fabriqaai/conceptual-model-pass -g -y
+```
+
+View the skill page on
+[skills.sh](https://www.skills.sh/fabriqaai/conceptual-model-pass/conceptual-model-pass).
+
 ## The problem it solves
 
 AI agents often jump into implementation recommendations before the vocabulary is
@@ -74,27 +95,6 @@ It treats the agent as a collaborative sparring partner, not a full automation
 engine. Early glossary and event-modeling work is usually where the agent helps
 most; aggregates and technical architecture should be reviewed carefully because
 small early mistakes can compound.
-
-## Install
-
-```bash
-npx skills add fabriqaai/conceptual-model-pass
-```
-
-Install directly from GitHub:
-
-```bash
-npx skills add https://github.com/fabriqaai/conceptual-model-pass --skill conceptual-model-pass
-```
-
-Install globally and skip prompts:
-
-```bash
-npx skills add fabriqaai/conceptual-model-pass -g -y
-```
-
-View the skill page on
-[skills.sh](https://www.skills.sh/fabriqaai/conceptual-model-pass/conceptual-model-pass).
 
 ## How to use it
 
