@@ -1,35 +1,79 @@
 # Conceptual Model Pass
 
-An agent skill that makes an AI explain the **language of a system before defending decisions** — naming and classifying each important term (what kind of thing it is, who owns it, its scope, lifecycle, relationships, and whether it's domain model or implementation) so you understand the ontology before you argue the details.
+An agent skill for making AI explain the **language of a system before defending
+decisions**.
 
-Works with any [`skills.sh`](https://skills.sh/)-compatible agent — Claude Code, Codex, Cursor, Gemini CLI, opencode, and others.
+Use it for ontology-first planning, domain modeling, event modeling,
+ubiquitous-language clarification, architecture/design discussions, permissions,
+workflows, integrations, and data-model decisions where vague terms keep making the
+conversation fuzzy.
+
+Works with any [`skills.sh`](https://skills.sh/)-compatible agent: Claude Code,
+Codex, Cursor, Gemini CLI, opencode, and others.
 
 ## The problem it solves
 
-When you plan an architecture or compare design options with an AI agent, the conversation often goes in circles. The agent reaches for words like **policy**, **role**, **permission**, **workflow**, **integration**, **task**, **rule**, **config**, or **resource** without ever saying *what kind of thing* each one is. Is "policy" a stored record? A runtime evaluation? A reusable definition? A link that binds one thing to another? You can't tell — so you and the agent keep re-negotiating the same ambiguity.
+AI agents often jump into implementation recommendations before the vocabulary is
+settled. Words like **policy**, **role**, **permission**, **workflow**,
+**integration**, **task**, **rule**, **config**, **event**, or **resource** can hide
+several different concepts.
 
-The result is endless back-and-forth: you re-ask "but where does that live?", "is that per-user or global?", "is that the model, or just how we'd build it?" — and the design discussion stalls before it can start.
+For example, "policy" might mean a reusable policy definition, a policy assignment,
+a runtime policy evaluation, or the effective result of that evaluation. Those are
+different things with different owners, lifecycles, storage needs, and failure
+modes.
 
-This skill forces the agent to settle the vocabulary first, so the rest of the conversation has solid ground to stand on.
+This skill forces the agent to settle the language first so planning can happen on
+solid ground.
 
 ## What it does
 
-When invoked, the agent runs a **conceptual model pass** before recommending anything:
+When invoked, the agent runs a **conceptual model pass** before recommending
+anything:
 
-1. **Surface the important terms** — the ones that carry architectural, ownership, persistence, runtime, or permission weight (it ignores incidental words).
-2. **Classify each term** into exactly one category: concept, definition/template, instance, assignment/binding, stored record, runtime state, protocol/interface, event/job/process, derived/effective result, or implementation choice.
-3. **Separate domain model from implementation choice** — always saying which is which.
-4. **Then** state the decision, and explain why it follows from the model.
+1. Names the modeling purpose and bounded context.
+2. Surfaces only the terms that carry architectural, ownership, lifecycle,
+   persistence, runtime, permission, workflow, or product meaning.
+3. Splits overloaded words into concrete subterms.
+4. Classifies each term by what kind of thing it is.
+5. Separates domain model from implementation choice.
+6. Uses competency questions to check whether the model answers the real planning
+   question.
+7. Adds review gates so glossary terms, event flows, and bounded contexts are
+   confirmed before later architecture decisions.
+8. Then states the decision and explains why it follows from the model.
 
-For each important term it answers: what kind of thing it is, who owns it, its scope/cardinality (global, per-org, per-workspace, per-user, per-object, per-request, or on-demand), its lifecycle, how it relates to the other terms, and the implementation that realizes it.
+The order matters:
 
-It also refuses to use vague words like *policy / role / permission / workflow / integration / task / rule / configuration / resource* without first classifying what kind of thing each one is.
+> **Language first, model second, decision third.**
 
-### The order matters
+## Not just tables
 
-> **Language first, decision second, rationale third.**
+Tables are optional. The skill chooses the smallest clear representation:
 
-The agent does not jump to an implementation recommendation before the ontology is clear.
+- **Micro pass** for a few important terms.
+- **Compact table** when many related terms need scanning.
+- **Glossary** when the goal is shared ubiquitous language.
+- **Event map** when the system is lifecycle-heavy.
+- **Deep pass** when bounded contexts, term collisions, or competency questions are
+  central.
+
+For event modeling, the agent may use this shape:
+
+```text
+Actor -> Command -> Event -> State change -> Policy/Rule -> Read model
+```
+
+For DDD-style work, the skill follows a review-gated progression:
+
+```text
+Ubiquitous language -> Event model -> Bounded contexts -> Aggregates -> Technical architecture
+```
+
+It treats the agent as a collaborative sparring partner, not a full automation
+engine. Early glossary and event-modeling work is usually where the agent helps
+most; aggregates and technical architecture should be reviewed carefully because
+small early mistakes can compound.
 
 ## Install
 
@@ -37,7 +81,7 @@ The agent does not jump to an implementation recommendation before the ontology 
 npx skills add fabriqaai/conceptual-model-pass
 ```
 
-Install globally (user-level, skip prompts):
+Install globally and skip prompts:
 
 ```bash
 npx skills add fabriqaai/conceptual-model-pass -g -y
@@ -47,28 +91,33 @@ Browse and discover more skills at [skills.sh](https://skills.sh/).
 
 ## How to use it
 
-This skill is **explicit-invocation only**. It stays dormant during ordinary work and will not hijack normal planning, reviews, or explanations — you have to ask for it by name:
+Ask directly:
 
-- "Do a **conceptual model pass** on this design"
-- "Explain the **language of the system** first" / "**ontology-first**"
-- "**Classify these terms** before we decide"
+- "Do a **conceptual model pass** on this design."
+- "Explain the **language of the system** first."
+- "Use **ontology-first planning**."
+- "Clarify the **ubiquitous language** before we decide."
+- "Do an **event modeling** pass for this workflow."
+- "**Classify these terms** before recommending an implementation."
 
-Once invoked, the agent stays in this mode for the rest of that design discussion until you move on.
+It can also be used when a planning or architecture request contains ambiguous
+decision-carrying vocabulary such as policy, workflow, integration, role,
+permission, event, state, connector, rule, configuration, or resource.
 
-## Decision template
+## Useful mindset cues
 
-When the agent makes a design decision under this skill, it presents it in a consistent shape:
+Use these phrases when you want the agent to enter the right modeling posture:
 
-```
-Term:                 the name
-Meaning:              what it is, plainly
-Category:             concept / definition / instance / binding / record / runtime / protocol / event / derived / implementation
-Scope / cardinality:  global / per-org / per-workspace / per-user / per-object / per-request / on-demand
-Lifecycle:            definition / instance / assignment / runtime state / effective result
-Relationships:        how it relates to the other terms
-Implementation map:   the tool / library / service / custom mechanism realizing it
-Concrete example:     one real instance
-```
+- **Language first**
+- **Ubiquitous language**
+- **Bounded context**
+- **Domain model**
+- **Domain event**
+- **Event storming** / **event modeling**
+- **Domain-vs-implementation**
+- **Aggregate** / **invariant**
+- **Competency questions**
+- **Split overloaded terms**
 
 ## License
 

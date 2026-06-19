@@ -1,0 +1,7 @@
+interface:
+  display_name: "Conceptual Model Pass"
+  short_description: "Clarify domain language before decisions"
+  default_prompt: "Use $conceptual-model-pass to clarify the domain language, events, and implementation choices before recommending a design."
+
+policy:
+  allow_implicit_invocation: true
