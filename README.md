@@ -81,13 +81,20 @@ small early mistakes can compound.
 npx skills add fabriqaai/conceptual-model-pass
 ```
 
+Install directly from GitHub:
+
+```bash
+npx skills add https://github.com/fabriqaai/conceptual-model-pass --skill conceptual-model-pass
+```
+
 Install globally and skip prompts:
 
 ```bash
 npx skills add fabriqaai/conceptual-model-pass -g -y
 ```
 
-Browse and discover more skills at [skills.sh](https://skills.sh/).
+View the skill page on
+[skills.sh](https://www.skills.sh/fabriqaai/conceptual-model-pass/conceptual-model-pass).
 
 ## How to use it
 
@@ -114,6 +121,7 @@ Use these phrases when you want the agent to enter the right modeling posture:
 - **Domain model**
 - **Domain event**
 - **Event storming** / **event modeling**
+- **Event storming mindset**
 - **Domain-vs-implementation**
 - **Aggregate** / **invariant**
 - **Competency questions**

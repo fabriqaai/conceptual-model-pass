@@ -70,6 +70,11 @@ For lifecycle-heavy systems, prefer an event map over a term table.
 
 Use when the user is planning behavior over time.
 
+Adopt an event-storming mindset when behavior, lifecycle, or workflow sequence is
+the confusing part. Start from domain events, then work backward to commands and
+actors, and forward to policies, reactions, aggregates, state changes, and read
+models.
+
 Map:
 
 ```text

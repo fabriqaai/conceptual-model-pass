@@ -33,6 +33,9 @@ When these phrases appear, adopt the corresponding mindset:
 - **Domain model**: separate business concepts from technical mechanisms.
 - **Domain event** / **event storming** / **event modeling**: model behavior over
   time through actors, commands, events, policies, and state changes.
+- **Event storming mindset**: when behavior or lifecycle matters, start from what
+  happened in the domain, then work backward to commands, actors, policies, and
+  aggregates.
 - **Aggregate** / **invariant**: look for consistency boundaries and rules that must
   hold together.
 - **Competency questions**: test the model with questions it must answer.
@@ -79,6 +82,8 @@ Choose the smallest clear representation:
 - **Standard pass**: compact term map, relationships, decision, rationale.
 - **Event-model pass**: actors, commands, events, state changes, policies/rules,
   read models, open questions.
+- **Event-storming pass**: domain events first, then commands, actors, policies,
+  aggregates, read models, and unclear temporal boundaries.
 - **Glossary pass**: shared vocabulary for a bounded context.
 - **Deep pass**: bounded contexts, term collisions, competency questions, pattern
   mapping, unresolved ambiguities.
@@ -149,8 +154,9 @@ ubiquitous language, use this sequence:
 
 1. Establish a ubiquitous language and ask clarifying questions for generic,
    artificial, or overloaded terms.
-2. Run an event-modeling or event-storming pass to connect actors, commands,
-   domain events, policies/rules, and state changes.
+2. Run an event-modeling or event-storming pass when behavior over time matters.
+   Start with domain events, then connect actors, commands, policies/rules,
+   aggregates, read models, and state changes.
 3. Identify bounded contexts, but check both directions: contexts may be too large
    or too granular.
 4. Propose aggregates/entities/invariants only after the language, events, and
